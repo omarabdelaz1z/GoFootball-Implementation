@@ -30,29 +30,25 @@ public class Administrator
         // active = 3 ;
         // suspended = 2;
         // delete = 1;
-
+        int action = 0;
         PLG_Owner ownerOfPlG = givenPLG.getOwner();
         double ownerReputation = ownerOfPlG.getReputation();
 
-        if(ownerReputation == 0.0)
-            return -1;
-
-        else {
-            if (ownerReputation < 1) {
-                ownerOfPlG.setPLG_NULL();
-                return 1;
-            }
-
-            if (ownerReputation < 2.50) {
-                givenPLG.setStatus("SUSPENDED");
-                return 2;
-            }
-
-            if (ownerReputation >= 2.50) {
-                givenPLG.setStatus("Active");
-                return 3;
-            }
+        if (ownerReputation < 1.0) {
+            ownerOfPlG.setPLG_NULL();
+            action = 1;
         }
-        return -1;
+
+        if (ownerReputation < 2.50) {
+            givenPLG.setStatus("SUSPENDED");
+            action = 2;
+        }
+
+        if (ownerReputation >= 2.50) {
+            givenPLG.setStatus("Active");
+            action = 3;
+        }
+        
+        return action;
     }
 }
